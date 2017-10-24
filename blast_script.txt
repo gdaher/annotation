@@ -1,0 +1,11 @@
+#! /bin/sh
+
+# Move to correct database
+cd /usr/local/bin
+
+# Extract human only GI values to filter database 
+blastdbcmd -db nt -entry all -outfmt "%g %T" | \ awk ' { if ($2 == 9606) { print $1 } } ' | \ human_sequences.txt
+
+# Make queries
+ blastn -query 'V:/Daher_Grace/For ME/two_tissue_annotation/HG-U133_Plus_2-target/HG-U133_Plus_2_test.target' -out 'V:/Daher_Grace/For ME/two_tissue_annotation/blast_from_fasta_test.xml' -db nt -gilist human_sequences.txt  -max_target_seqs 1  -outfmt 5 -task megablast
+
